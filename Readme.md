@@ -12,10 +12,9 @@ This document outlines the technical aspects of CareerPath, including:
 1. System Architecture
 2. Front-end
 3. Back-end
-4. Database
-5. API Design
-6. Testing
-7. Future Enhancements
+4. Email Verification
+5. Database
+6. API Design
 
 ---
 
@@ -55,6 +54,7 @@ Frameworks and tools used:
 The back end of CareerPath is developed using NodeJS and ExpressJS, providing a robust API for the front end to interact with. Key features include:
 
 - **User Authentication and Authorization:** Managed with JWT, ensuring secure access for students and recruiters.
+- **Email Verification:**  Ensures secure email validation during the registration process through OTP.
 - **Resume Uploads:** Handled via Multer and Cloudinary for efficient file management.
 - **Job Management:** Endpoints for creating, reading, updating, and deleting job postings.
 - **Application Handling:** API for managing applications, including status updates.
