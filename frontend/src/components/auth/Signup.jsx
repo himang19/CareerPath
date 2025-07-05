@@ -33,6 +33,10 @@ const Signup = () => {
   };
   const submitHandler = async (e) => {
     e.preventDefault();
+    if (!input.file) { // ✅ File compulsory check
+      toast.error("Profile photo is required!");
+      return;
+    }
     try {
       dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_END_POINT}/register/otp`, {email:input.email} , {

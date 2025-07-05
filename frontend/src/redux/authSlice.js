@@ -12,8 +12,8 @@ const authSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
-    setSignupData(state, value) {
-      state.signupData = value.payload;
+    setSignupData: (state, action)=> {
+      state.signupData = action.payload;
     },
     setUser: (state, action) => {
       state.user = action.payload;
