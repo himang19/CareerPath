@@ -52,8 +52,8 @@ const Home = () => {
    setTimeout(() => {
       toast.error("No profile exists with such role");
     }, 100);
-    // Clean the URL
-    // window.history.replaceState({}, '', window.location.pathname);
+
+    window.history.replaceState({}, '', window.location.pathname);
   }
 }, []);
 
