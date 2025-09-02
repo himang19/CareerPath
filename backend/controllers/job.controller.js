@@ -105,7 +105,7 @@ export const updateJob = async (req, res) => {
       const { id } = req.params;
       const { position, requirements, salary, location, jobType, experience } = req.body;
 
-      const processedRequirements = requirements.split(",");
+      const processedRequirements = Array.isArray(requirements) ? requirements : requirements.split(",");
   
       const updateData = {
         position,
@@ -113,7 +113,7 @@ export const updateJob = async (req, res) => {
         salary,
         location,
         jobType,
-        experience,
+        experienceLevel:experience,
       };
   
       const job = await Job.findByIdAndUpdate(id, updateData, { new: true });

@@ -12,11 +12,16 @@ import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { USER_API_END_POINT } from "@/utils/constant";
+import { USER_API_END_POINT ,JOB_API_END_POINT} from "@/utils/constant";
 import { setUser } from "@/redux/authSlice";
 import { toast } from "sonner";
+import { useParams } from "react-router-dom";
+
 
 const UpdateProfileDialog = ({ open, setOpen }) => {
+  const params = useParams();
+
+  console.log("u4r4hr4ij");
   const [loading, setLoading] = useState(false);
   const { user } = useSelector((store) => store.auth);
 
@@ -27,6 +32,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     skills: user?.profile?.skills?.map((skill) => skill) || "",
     file: user?.profile?.resume || "",
   });
+  console.log("input is ",input);
   const dispatch = useDispatch();
 
   const changeEventHandler = (e) => {
@@ -39,6 +45,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
   };
 
   const submitHandler = async (e) => {
+    console.log("submit handkler called");
     e.preventDefault();
     const formData = new FormData();
     formData.append("fullname", input.fullname);
@@ -50,12 +57,13 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     }
     try {
       setLoading(true);
-      const res = await axios.put(
-        `${JOB_API_END_POINT}/update/${params.id}`,
+      console.log("hhwbsdxhdx");
+      const res = await axios.post(
+        `${USER_API_END_POINT}/profile/update`,
         input,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
           withCredentials: true,
         }
@@ -66,7 +74,8 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message);
+  toast.error(error.response?.data?.message || "Update failed");
+
     } finally {
       setLoading(false);
     }

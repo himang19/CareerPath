@@ -6,7 +6,7 @@ import { RadioGroup } from "../ui/radio-group";
 import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { USER_API_END_POINT } from "@/utils/constant";
+import { USER_API_END_POINT, AUTH_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading, setUser } from "@/redux/authSlice";
@@ -48,11 +48,23 @@ const Login = () => {
       dispatch(setLoading(false));
     }
   };
+
+  // 👇 Google login handler
+  const handleGoogleLogin = () => {
+    if (!input.role) {
+      toast.error("Please select a role before Google login.");
+      return;
+    }
+    // Redirect to backend Google Auth with role
+    window.location.href = `${AUTH_API_END_POINT}/google?role=${input.role}`;
+  };
+
   useEffect(() => {
     if (user) {
       navigate("/");
     }
   }, []);
+
   return (
     <div>
       <Navbar />
@@ -80,9 +92,11 @@ const Login = () => {
               value={input.password}
               name="password"
               onChange={changeEventHandler}
-              placeholder="xyz@gmail.com"
+              placeholder="Enter your password"
             />
           </div>
+
+          {/* Role selection */}
           <div className="flex items-center justify-between">
             <RadioGroup className="flex items-center gap-4 my-5">
               <div className="flex items-center space-x-2">
@@ -94,7 +108,7 @@ const Login = () => {
                   onChange={changeEventHandler}
                   className="cursor-pointer"
                 />
-                <Label htmlFor="r1">Student</Label>
+                <Label>Student</Label>
               </div>
               <div className="flex items-center space-x-2">
                 <Input
@@ -105,20 +119,32 @@ const Login = () => {
                   onChange={changeEventHandler}
                   className="cursor-pointer"
                 />
-                <Label htmlFor="r2">Recruiter</Label>
+                <Label>Recruiter</Label>
               </div>
             </RadioGroup>
           </div>
+
           {loading ? (
             <Button className="w-full my-4">
-              {" "}
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait{" "}
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait
             </Button>
           ) : (
             <Button type="submit" className="w-full my-4">
               Login
             </Button>
           )}
+
+          {/* 👇 Google login button */}
+          <div className="my-4">
+            <Button
+              type="button"
+              onClick={handleGoogleLogin}
+              className="w-full bg-red-600 hover:bg-red-700 text-white"
+            >
+              Login with Google
+            </Button>
+          </div>
+
           <span className="text-sm">
             Don't have an account?{" "}
             <Link to="/signup" className="text-blue-600">

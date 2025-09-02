@@ -16,42 +16,19 @@ import Applicants from "./components/admin/Applicants";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
 import UpdateJob from "./components/admin/UpdateJob";
 import Verification from "./components/Verification";
+import AxiosInterceptor from "./utils/AxiosInterceptor"; // yaha import karna
 
 const appRouter = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/signup",
-    element: <Signup />,
-  },
-  {
-    path: "/signup/verification",
-    element: <Verification />,
-  },
+  { path: "/", element: <Home /> },
+  { path: "/login", element: <Login /> },
+  { path: "/signup", element: <Signup /> },
+  { path: "/signup/verification", element: <Verification /> },
+  { path: "/jobs", element: <Jobs /> },
+  { path: "/description/:id", element: <JobDescription /> },
+  { path: "/browse", element: <Browse /> },
+  { path: "/profile", element: <Profile /> },
 
-  {
-    path: "/jobs",
-    element: <Jobs />,
-  },
-  {
-    path: "/description/:id",
-    element: <JobDescription />,
-  },
-  {
-    path: "/browse",
-    element: <Browse />,
-  },
-  {
-    path: "/profile",
-    element: <Profile />,
-  },
-  // admin ke liye yha se start hoga
+  // admin ke liye routes
   {
     path: "/admin/companies",
     element: (
@@ -96,7 +73,7 @@ const appRouter = createBrowserRouter([
     path: "/admin/jobs/:id",
     element: (
       <ProtectedRoute>
-        <UpdateJob/>
+        <UpdateJob />
       </ProtectedRoute>
     ),
   },
@@ -109,11 +86,12 @@ const appRouter = createBrowserRouter([
     ),
   },
 ]);
+
 function App() {
   return (
-    <div>
+    <AxiosInterceptor>
       <RouterProvider router={appRouter} />
-    </div>
+    </AxiosInterceptor>
   );
 }
 

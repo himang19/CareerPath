@@ -244,3 +244,24 @@ export const updateProfile = async (req, res) => {
         console.log(error);
     }
 }
+
+export const getuser=async (req,res) => {
+    try{
+     const user=await User.findById(req.id);
+     if(!user){
+        return res.status(400).json({
+            message:"User not found",
+            success:false
+        })
+     }
+
+     return res.status(200).json({
+        message:"User found",
+        user,
+        success:true
+     })
+    }catch(error)
+    {
+        console.log(error);
+    }
+}
